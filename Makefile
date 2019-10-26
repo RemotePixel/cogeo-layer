@@ -6,7 +6,7 @@ layer:
 		--name lambda \
 		-w /var/task \
 		--volume $(shell pwd)/:/local \
-		-itd package:latest \
+		-itd remotepixel/amazonlinux:gdal3.0-py3.7-cogeo \
 		bash
 	docker exec -it lambda bash '/local/scripts/create-lambda-layer.sh'	
 	docker cp lambda:/tmp/package.zip gdal3.0-py3.7-cogeo.zip
