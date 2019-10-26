@@ -16,7 +16,7 @@ jobs:
             docker run \
               --name lambda \
               -w /var/task \
-              --volume $(shell pwd)/:/local \
+              --volume $(pwd)/:/local \
               -itd package:latest \
               bash
             docker exec -it lambda bash '/local/scripts/create-lambda-layer.sh'	
