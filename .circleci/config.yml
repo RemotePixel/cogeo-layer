@@ -12,7 +12,7 @@ jobs:
       - run:
           name: create layer 
           command: |
-            docker build --tag package:latest .
+            docker build --tag remotepixel/amazonlinux:gdal3.0-py3.7-cogeo .
             docker run \
               --name lambda \
               -w /var/task \
