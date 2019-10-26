@@ -20,7 +20,7 @@ jobs:
               -itd remotepixel/amazonlinux:gdal3.0-py3.7-cogeo \
               bash
             docker exec -it lambda bash '/local/scripts/create-lambda-layer.sh'	
-            docker cp lambda:/tmp/package.zip gdal3.0-py3.7-cogeo.zip
+            docker cp lambda:/tmp/package.zip gdal30-py37-cogeo.zip
             docker stop lambda
             docker rm lambda        
       - run:
@@ -34,7 +34,7 @@ jobs:
                 --env GDAL_VERSION=${GDAL_VERSION} \
                 --env PYTHONPATH=/opt/python:/var/runtime \
                 -itd lambci/lambda:build-python3.7 bash
-            docker cp ./gdal3.0-py3.7-cogeo.zip lambda:/tmp/layer.zip
+            docker cp ./gdal30-py37-cogeo.zip lambda:/tmp/layer.zip
             docker exec -it lambda bash -c 'unzip -q /tmp/layer.zip -d /opt/'
             docker exec -it lambda bash -c 'pip install pytest && py.test /local/tests/'
             docker stop lambda
@@ -45,7 +45,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - gdal3.0-py3.7-cogeo.zip
+            - gdal30-py37-cogeo.zip
   
   deploy:
     docker:
@@ -62,7 +62,7 @@ jobs:
             sudo pip install awscli
       - run:
           name: Deploy Layer
-          command: ./scripts/deploy-layer.sh gdal3.0-py3.7-cogeo
+          command: ./scripts/deploy-layer.sh gdal30-py37-cogeo
 
 workflows:
   version: 2
