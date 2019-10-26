@@ -1,0 +1,75 @@
+version: 2
+jobs:
+  build:
+    machine:
+      docker_layer_caching: false 
+    working_directory: ~/cogeo-layer
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/cogeo-layer
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: create layer 
+          command: |
+            docker build --tag package:latest .
+            docker run \
+              --name lambda \
+              -w /var/task \
+              --volume $(shell pwd)/:/local \
+              -itd package:latest \
+              bash
+            docker exec -it lambda bash '/local/scripts/create-lambda-layer.sh'	
+            docker cp lambda:/tmp/package.zip gdal3.0-py3.7-cogeo.zip
+            docker stop lambda
+            docker rm lambda        
+      - run:
+          name: test layer 
+          command: |
+            docker run \
+                --name lambda \
+                --volume $(pwd)/:/local \
+                --env GDAL_DATA=/opt/share/gdal \
+                --env PROJ_LIB=/opt/share/proj \
+                --env GDAL_VERSION=${GDAL_VERSION} \
+                --env PYTHONPATH=/opt/python:/var/runtime \
+                -itd lambci/lambda:build-python3.7 bash
+            docker cp ./gdal3.0-py3.7-cogeo.zip lambda:/tmp/layer.zip
+            docker exec -it lambda bash -c 'unzip -q /tmp/layer.zip -d /opt/'
+            docker exec -it lambda bash -c 'pip install pytest && py.test /local/tests/'
+            docker stop lambda
+            docker rm lambda
+      - run:
+          name: push image
+          command: docker push remotepixel/amazonlinux:gdal3.0-py3.7-cogeo
+      - persist_to_workspace:
+          root: .
+          paths:
+            - gdal3.0-py3.7-cogeo.zip
+  
+  deploy:
+    docker:
+      - image: circleci/python:3.7.2
+    working_directory: ~/cogeo-layer
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/cogeo-layer
+      - run:
+          name: install cmd
+          command: |
+            sudo apt-get install jq
+            sudo pip install awscli
+      - run:
+          name: Deploy Layer
+          command: ./scripts/deploy-layer.sh gdal3.0-py3.7-cogeo
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build    
+      - deploy:
+          requires:
+            - build
+
