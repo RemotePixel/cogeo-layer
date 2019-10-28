@@ -4,7 +4,7 @@
 
 #### Arns
 
-`arn:aws:lambda:{REGION}:524387336408:layer:gdal3.0-py3.7-cogeo`
+`arn:aws:lambda:{REGION}:524387336408:layer:gdal30-py37-cogeo`
 
 #### Regions
 - us-east-1
