@@ -5,7 +5,7 @@ RUN pip install cython==0.28
 # We can add pyproj too
 RUN pip install \
     lambda-proxy~=5.0 \
-    pyproj==2.3.1 \
+    pyproj==2.4.1 \
     numpy \
     rasterio[s3] \
     requests \
