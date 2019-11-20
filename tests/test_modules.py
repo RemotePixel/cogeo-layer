@@ -13,11 +13,6 @@ import rio_tiler_mvt
 import shapely
 import supermercado
 
-from rasterio.env import GDALVersion
-
-if not GDALVersion.runtime().at_least("3.0"):
-    import pyproj
-
 
 def test_modules():
     """Test we can import modules."""
@@ -32,6 +27,3 @@ def test_modules():
     assert rio_tiler_mvt.__version__
     assert shapely.__version__
     assert supermercado.__package__
-
-    if not GDALVersion.runtime().at_least("3.0"):
-        assert pyproj.__version__
