@@ -1,0 +1,12 @@
+lambda-proxy~=5.0
+numpy
+pyproj==2.4.1
+rasterio[s3]
+requests
+rio-cogeo
+rio-color
+rio-tiler
+rio_tiler_mosaic
+rio_tiler_mvt
+shapely
+supermercado

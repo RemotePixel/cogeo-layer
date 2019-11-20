@@ -1,7 +1,7 @@
 """test modules."""
 
 import lambda_proxy
-import pyproj
+
 import numpy
 import rasterio
 import requests
@@ -13,11 +13,15 @@ import rio_tiler_mvt
 import shapely
 import supermercado
 
+from rasterio.env import GDALVersion
+
+if not GDALVersion.runtime().at_least("3.0"):
+    import pyproj
+
 
 def test_modules():
     """Test we can import modules."""
     assert lambda_proxy.version
-    assert pyproj.__version__
     assert numpy.__version__
     assert rasterio.__version__
     assert requests.__version__
@@ -28,3 +32,6 @@ def test_modules():
     assert rio_tiler_mvt.__version__
     assert shapely.__version__
     assert supermercado.__package__
+
+    if not GDALVersion.runtime().at_least("3.0"):
+        assert pyproj.__version__

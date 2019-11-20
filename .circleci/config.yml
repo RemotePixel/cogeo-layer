@@ -1,55 +1,71 @@
 version: 2
-jobs:
-  build:
-    machine:
-      docker_layer_caching: false 
-    working_directory: ~/cogeo-layer
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/cogeo-layer
-      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-      - run:
-          name: create layer 
-          command: |
-            docker build --tag remotepixel/amazonlinux:gdal3.0-py3.7-cogeo .
-            docker run \
+common: &common
+  machine:
+    docker_layer_caching: false 
+  working_directory: ~/cogeo-layer
+  steps:
+    - checkout
+    - attach_workspace:
+        at: ~/cogeo-layer
+    
+    - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+    
+    - run:
+        name: create layer 
+        command: |
+          docker build --tag remotepixel/amazonlinux:gdal${GDAL_VERSION}-py3.7-cogeo .
+          docker run \
+            --name lambda \
+            -w /var/task \
+            --volume $(pwd)/:/local \
+            -itd remotepixel/amazonlinux:gdal${GDAL_VERSION}-py3.7-cogeo \
+            bash
+          docker exec -it lambda bash '/local/scripts/create-lambda-layer.sh'	
+          docker cp lambda:/tmp/package.zip gdal${GDAL_VERSION}-py3.7-cogeo.zip
+          docker stop lambda
+          docker rm lambda        
+    
+    - run:
+        name: test layer 
+        command: |
+          docker run \
               --name lambda \
-              -w /var/task \
               --volume $(pwd)/:/local \
-              -itd remotepixel/amazonlinux:gdal3.0-py3.7-cogeo \
-              bash
-            docker exec -it lambda bash '/local/scripts/create-lambda-layer.sh'	
-            docker cp lambda:/tmp/package.zip gdal30-py37-cogeo.zip
-            docker stop lambda
-            docker rm lambda        
-      - run:
-          name: test layer 
-          command: |
-            docker run \
-                --name lambda \
-                --volume $(pwd)/:/local \
-                --env GDAL_DATA=/opt/share/gdal \
-                --env PROJ_LIB=/opt/share/proj \
-                --env GDAL_VERSION=${GDAL_VERSION} \
-                --env PYTHONPATH=/opt/python:/var/runtime \
-                -itd lambci/lambda:build-python3.7 bash
-            docker cp ./gdal30-py37-cogeo.zip lambda:/tmp/layer.zip
-            docker exec -it lambda bash -c 'unzip -q /tmp/layer.zip -d /opt/'
-            docker exec -it lambda bash -c 'pip install pytest && py.test /local/tests/'
-            docker stop lambda
-            docker rm lambda
-      - run:
-          name: push image
-          command: docker push remotepixel/amazonlinux:gdal3.0-py3.7-cogeo
-      - persist_to_workspace:
-          root: .
-          paths:
-            - gdal30-py37-cogeo.zip
-  
+              --env GDAL_DATA=/opt/share/gdal \
+              --env PROJ_LIB=/opt/share/proj \
+              --env PYTHONPATH=/opt/python:/var/runtime \
+              -itd lambci/lambda:build-python3.7 bash
+          docker cp ./gdal${GDAL_VERSION}-py3.7-cogeo.zip lambda:/tmp/layer.zip
+          docker exec -it lambda bash -c 'unzip -q /tmp/layer.zip -d /opt/'
+          docker exec -it lambda bash -c 'pip install pytest && py.test /local/tests/'
+          docker stop lambda
+          docker rm lambda
+    
+    - run:
+        name: push image
+        command: docker push remotepixel/amazonlinux:gdal${GDAL_VERSION}-py3.7-cogeo
+    
+    - persist_to_workspace:
+        root: .
+        paths:
+          - gdal${GDAL_VERSION}-py3.7-cogeo.zip
+
+jobs:
+  "gdal-3.0":
+    <<: *common
+    environment:
+      - GDAL_VERSION=3.0
+
+  "gdal-2.4":
+    <<: *common
+    environment:
+      - GDAL_VERSION=2.4
+
   deploy:
     docker:
       - image: circleci/python:3.7.2
+        environment:
+          - GDAL_VERSIONS=2.4 3.0
     working_directory: ~/cogeo-layer
     steps:
       - checkout
@@ -62,7 +78,10 @@ jobs:
             sudo pip install awscli
       - run:
           name: Deploy Layer
-          command: ./scripts/deploy-layer.sh gdal30-py37-cogeo
+          command: |
+            for GDAL_VERSION in ${GDAL_VERSIONS}; do
+              ./scripts/deploy-layer.sh cogeo ${GDAL_VERSION} 3.7
+            done
 
 workflows:
   version: 2

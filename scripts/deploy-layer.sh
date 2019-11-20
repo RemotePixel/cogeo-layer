@@ -5,6 +5,8 @@ echo "Deploy Lambda Layer"
 echo "-------------------"
 
 LAYER_NAME=$1
+GDAL_VERSION=$2
+PYTHON_VERSION=$3
 
 AWS_REGIONS=( 
     # ap-northeast-1 ap-northeast-2
@@ -19,11 +21,14 @@ AWS_REGIONS=(
     us-west-1 us-west-2
 )
 
-LAYER_RUNTIME=python3.7
-LNAME=${LAYER_NAME}
+PYTHON_VERSION_NODOT="${PYTHON_VERSION//.}"
+GDAL_VERSION_NODOT="${GDAL_VERSION//.}"
+
+LAYER_RUNTIME=python${PYTHON_VERSION}
+LNAME=gdal${GDAL_VERSION_NODOT}-py${PYTHON_VERSION_NODOT}-${LAYER_NAME}
 LAYER_DESC="Lambda Layer - ${LAYER_RUNTIME}"
 
-LOCAL_LNAME=${LAYER_NAME}.zip
+LOCAL_LNAME=gdal${GDAL_VERSION}-py${PYTHON_VERSION}-${LAYER_NAME}.zip
 LAYER_HASH=$(sha256sum ${LOCAL_LNAME} | awk '{print $1}')
 
 echo "Deploying ${LNAME}"
