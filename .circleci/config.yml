@@ -50,7 +50,7 @@ common: &common
     - persist_to_workspace:
         root: .
         paths:
-          - gdal${GDAL_VERSION}-py3.7-cogeo.zip
+          - *-cogeo.zip
 
 jobs:
   "gdal-3.0":
