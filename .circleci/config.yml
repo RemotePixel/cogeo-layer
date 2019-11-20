@@ -13,7 +13,9 @@ common: &common
     - run:
         name: create layer 
         command: |
-          docker build --tag remotepixel/amazonlinux:gdal${GDAL_VERSION}-py3.7-cogeo .
+          docker build \
+            --build-arg GDAL_VERSION=${GDAL_VERSION} \
+            --tag remotepixel/amazonlinux:gdal${GDAL_VERSION}-py3.7-cogeo .
           docker run \
             --name lambda \
             -w /var/task \
