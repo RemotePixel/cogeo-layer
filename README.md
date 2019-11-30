@@ -33,15 +33,15 @@ supermercado
 #### Version
 
 ##### GDAL 3.0
-- Layer Version: **6**
-- Package size: 34.9Mb (110Mb)
+- Layer Version: **7**
+- Package size: 44.8Mb (130.4Mb)
 - Python Version: 3.7.2
 - GDAL Version: 3.0.2
 - PROJ Version: 6.2.1
 
 ##### GDAL 2.4
-- Layer Version: **3**
-- Package size: 32.8Mb (106Mb)
+- Layer Version: **4**
+- Package size: 34.4Mb (115Mb)
 - Python Version: 3.7.2
 - GDAL Version: 2.4.3
 - PROJ Version: 5.2.0
