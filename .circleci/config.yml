@@ -77,12 +77,12 @@ jobs:
           name: install cmd
           command: |
             sudo apt-get install jq
-            sudo pip install awscli
+            sudo pip install boto3 click
       - run:
           name: Deploy Layer
           command: |
             for GDAL_VERSION in ${GDAL_VERSIONS}; do
-              ./scripts/deploy-layer.sh cogeo ${GDAL_VERSION} 3.7
+              python scripts/deploy-layer.py ${GDAL_VERSION} 3.7 cogeo
             done
 
 workflows:
