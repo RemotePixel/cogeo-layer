@@ -52,7 +52,7 @@ def main(gdalversion, pythonversion, layername):
 
         if layers:
             layer = layers[0]
-            layer_sha = layer["Description"].split(" ")[7]
+            layer_sha = layer["Description"].split(" ")[-1]
         else:
             layer_sha = ""
 
