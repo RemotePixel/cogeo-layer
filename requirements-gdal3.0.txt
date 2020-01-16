@@ -10,3 +10,4 @@ rio_tiler_mosaic
 rio_tiler_mvt
 shapely
 supermercado
+pygeos

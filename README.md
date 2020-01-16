@@ -7,6 +7,7 @@
 ```
 lambda-proxy~=5.0
 numpy
+pygeos
 pyproj==2.4.1 (only with GDAL 3.0)
 rasterio[s3]
 requests
@@ -36,14 +37,14 @@ supermercado
 - Layer Version: **7**
 - Package size: 44.8Mb (130.4Mb)
 - Python Version: 3.7.2
-- GDAL Version: 3.0.2
+- GDAL Version: 3.0.3
 - PROJ Version: 6.2.1
 
 ##### GDAL 2.4
 - Layer Version: **4**
 - Package size: 34.4Mb (115Mb)
 - Python Version: 3.7.2
-- GDAL Version: 2.4.3
+- GDAL Version: 2.4.4
 - PROJ Version: 5.2.0
 
 ## How To

@@ -12,12 +12,14 @@ import rio_tiler_mosaic
 import rio_tiler_mvt
 import shapely
 import supermercado
+import pygeos
 
 
 def test_modules():
     """Test we can import modules."""
     assert lambda_proxy.version
     assert numpy.__version__
+    assert pygeos.__version__
     assert rasterio.__version__
     assert requests.__version__
     assert rio_cogeo.version

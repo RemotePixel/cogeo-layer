@@ -10,9 +10,12 @@ rm -rdf $PREFIX/python/boto3* \
 && rm -rdf $PREFIX/python/dateutil* \
 && rm -rdf $PREFIX/python/jmespath* \
 && rm -rdf $PREFIX/python/s3transfer* \
-&& rm -rdf $PREFIX/python/numpy/doc/ \
-&& rm -rdf $PREFIX/share/doc \
-&& rm -rdf $PREFIX/share/man
+&& rm -rdf $PREFIX/python/numpy/doc/
+
+echo "Remove useless files"
+rm -rdf $PREFIX/share/doc \
+&& rm -rdf $PREFIX/share/man \
+&& rm -rdf $PREFIX/share/hdf*
 
 echo "Remove uncompiled python scripts"
 find $PREFIX/python -type f -name '*.pyc' | while read f; do n=$(echo $f | sed 's/__pycache__\///' | sed 's/.cpython-[2-3][0-9]//'); cp $f $n; done;
@@ -24,4 +27,5 @@ cd $PREFIX && find lib -name \*.so\* -exec strip {} \;
 
 echo "Create archives"
 cd $PREFIX && zip -r9q /tmp/package.zip python
-cd $PREFIX && zip -r9q --symlinks /tmp/package.zip lib/*.so* share bin
+cd $PREFIX && zip -r9q --symlinks /tmp/package.zip lib/*.so* share
+cd $PREFIX && zip -r9q --symlinks /tmp/package.zip bin/gdal* bin/ogr* bin/geos* bin/nearblack
