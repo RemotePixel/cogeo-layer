@@ -9,7 +9,7 @@ lambda-proxy~=5.0
 numpy
 pygeos
 pyproj==2.4.1 (only with GDAL 3.0)
-rasterio[s3]
+rasterio>=1.1.3
 requests
 rio-cogeo
 rio-color

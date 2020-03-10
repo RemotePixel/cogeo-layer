@@ -1,6 +1,6 @@
 lambda-proxy~=5.0
 numpy
-rasterio[s3]
+rasterio>=1.1.3
 requests
 rio-cogeo
 rio-color
