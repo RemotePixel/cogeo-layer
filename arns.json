@@ -4,13 +4,13 @@
     "layers": [
       {
         "name": "gdal24-py37-cogeo",
-        "arn": "arn:aws:lambda:us-east-1:524387336408:layer:gdal24-py37-cogeo:5",
-        "version": 5
+        "arn": "arn:aws:lambda:us-east-1:524387336408:layer:gdal24-py37-cogeo:6",
+        "version": 6
       },
       {
         "name": "gdal30-py37-cogeo",
-        "arn": "arn:aws:lambda:us-east-1:524387336408:layer:gdal30-py37-cogeo:8",
-        "version": 8
+        "arn": "arn:aws:lambda:us-east-1:524387336408:layer:gdal30-py37-cogeo:9",
+        "version": 9
       }
     ]
   },
@@ -19,13 +19,13 @@
     "layers": [
       {
         "name": "gdal24-py37-cogeo",
-        "arn": "arn:aws:lambda:us-east-2:524387336408:layer:gdal24-py37-cogeo:5",
-        "version": 5
+        "arn": "arn:aws:lambda:us-east-2:524387336408:layer:gdal24-py37-cogeo:6",
+        "version": 6
       },
       {
         "name": "gdal30-py37-cogeo",
-        "arn": "arn:aws:lambda:us-east-2:524387336408:layer:gdal30-py37-cogeo:8",
-        "version": 8
+        "arn": "arn:aws:lambda:us-east-2:524387336408:layer:gdal30-py37-cogeo:9",
+        "version": 9
       }
     ]
   },
@@ -34,13 +34,13 @@
     "layers": [
       {
         "name": "gdal24-py37-cogeo",
-        "arn": "arn:aws:lambda:us-west-1:524387336408:layer:gdal24-py37-cogeo:5",
-        "version": 5
+        "arn": "arn:aws:lambda:us-west-1:524387336408:layer:gdal24-py37-cogeo:6",
+        "version": 6
       },
       {
         "name": "gdal30-py37-cogeo",
-        "arn": "arn:aws:lambda:us-west-1:524387336408:layer:gdal30-py37-cogeo:8",
-        "version": 8
+        "arn": "arn:aws:lambda:us-west-1:524387336408:layer:gdal30-py37-cogeo:9",
+        "version": 9
       }
     ]
   },
@@ -49,13 +49,13 @@
     "layers": [
       {
         "name": "gdal24-py37-cogeo",
-        "arn": "arn:aws:lambda:us-west-2:524387336408:layer:gdal24-py37-cogeo:5",
-        "version": 5
+        "arn": "arn:aws:lambda:us-west-2:524387336408:layer:gdal24-py37-cogeo:6",
+        "version": 6
       },
       {
         "name": "gdal30-py37-cogeo",
-        "arn": "arn:aws:lambda:us-west-2:524387336408:layer:gdal30-py37-cogeo:8",
-        "version": 8
+        "arn": "arn:aws:lambda:us-west-2:524387336408:layer:gdal30-py37-cogeo:9",
+        "version": 9
       }
     ]
   },
@@ -64,13 +64,13 @@
     "layers": [
       {
         "name": "gdal24-py37-cogeo",
-        "arn": "arn:aws:lambda:eu-central-1:524387336408:layer:gdal24-py37-cogeo:5",
-        "version": 5
+        "arn": "arn:aws:lambda:eu-central-1:524387336408:layer:gdal24-py37-cogeo:6",
+        "version": 6
       },
       {
         "name": "gdal30-py37-cogeo",
-        "arn": "arn:aws:lambda:eu-central-1:524387336408:layer:gdal30-py37-cogeo:8",
-        "version": 8
+        "arn": "arn:aws:lambda:eu-central-1:524387336408:layer:gdal30-py37-cogeo:9",
+        "version": 9
       }
     ]
   }
