@@ -1,5 +1,7 @@
 # cogeo-layer
 
+:warning: This is now replaced by https://github.com/lambgeo/geo-layer
+
 [![CircleCI](https://circleci.com/gh/RemotePixel/cogeo-layer.svg?style=svg)](https://circleci.com/gh/RemotePixel/cogeo-layer)
 
 #### Python package
